@@ -1,0 +1,15 @@
+@font-face {
+  font-family: RobotoMono;
+  src: url("assets/RobotoMono-VariableFont.ttf");
+}
+
+body {
+  margin: 0;
+  font-family: RobotoMono, source-code-pro, Menlo, Monaco, Consolas, "Courier New";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}

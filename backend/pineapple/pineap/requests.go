@@ -7,7 +7,7 @@ import (
 	"io"
 	"net/http"
 
-	"gitlab.ritsec.cloud/BradHacker/ssid-jungle/pineapple"
+	"gitlab.ritsec.cloud/BradHacker/ssid-jungle/backend/pineapple"
 )
 
 // ListSSIDs lists PineAP SSID Pool using the WiFi Pineapple Mk7 REST API

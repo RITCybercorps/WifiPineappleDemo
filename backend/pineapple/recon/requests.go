@@ -7,7 +7,7 @@ import (
 	"io"
 	"net/http"
 
-	"gitlab.ritsec.cloud/BradHacker/ssid-jungle/pineapple"
+	"gitlab.ritsec.cloud/BradHacker/ssid-jungle/backend/pineapple"
 )
 
 // StartScan starts a recon scan using the WiFi Pineapple Mk7 REST API
@@ -199,5 +199,52 @@ func DeleteScan(token string, scanID int) (bool, error) {
 			return false, fmt.Errorf("failed to unmarshal /api/recon/scans error object: %v", err)
 		}
 		return false, fmt.Errorf("got error message: \"%s\"", apiError.Error)
+	}
+}
+
+// ListScans lists previous recon scans using the WiFi Pineapple Mk7 REST API
+func ListScanAps(token string, scanId int) (*ReconScanApResponse, error) {
+	payload, err := json.Marshal(ReconScanApBody{
+		Search:   "",
+		Page:     0,
+		PageSize: 15,
+		SortCol:  "last_seen",
+		SortDir:  "asc",
+	})
+	if err != nil {
+		return nil, fmt.Errorf("failed to marshal scan ap body: %v", err)
+	}
+
+	req, err := http.NewRequest("POST", fmt.Sprintf("http://172.16.42.1:1471/api/recon/scans/%d/ap", scanId), bytes.NewReader(payload))
+	if err != nil {
+		return nil, fmt.Errorf("failed to create request: %v", err)
+	}
+	req.Header.Add("Authorization", fmt.Sprintf("Bearer %s", token))
+
+	client := http.Client{}
+	res, err := client.Do(req)
+	if err != nil {
+		return nil, fmt.Errorf("failed to POST to /api/recon/scans/%d/ap: %v", scanId, err)
+	}
+	defer res.Body.Close()
+	body, err := io.ReadAll(res.Body)
+	if err != nil {
+		return nil, fmt.Errorf("failed to read response body: %v", err)
+	}
+
+	if res.StatusCode == http.StatusOK {
+		var scanApRes ReconScanApResponse
+		err = json.Unmarshal(body, &scanApRes)
+		if err != nil {
+			return nil, fmt.Errorf("failed to unmarshal /api/recon/scans/%d/api response: %v", scanId, err)
+		}
+		return &scanApRes, nil
+	} else {
+		var apiError pineapple.APIError
+		err = json.Unmarshal(body, &apiError)
+		if err != nil {
+			return nil, fmt.Errorf("failed to unmarshal /api/recon/scans/%d/ap error object: %v", scanId, err)
+		}
+		return nil, fmt.Errorf("got error message: \"%s\"", apiError.Error)
 	}
 }

@@ -1,0 +1,114 @@
+.App {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(1.5rem);
+  color: white;
+}
+
+.ap-list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 60%;
+  padding: 0 3rem;
+  box-sizing: border-box;
+}
+
+.ap {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding: 0.5rem 1rem;
+  background-color: rgb(36, 39, 46);
+  border: 1px solid rgb(75, 79, 90);
+  animation: fadein 0.25s ease-in-out;
+}
+
+.ap:not(:last-of-type) {
+  border-bottom: none;
+}
+
+.ap:first-of-type {
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+
+.ap:last-of-type {
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+}
+
+.ap-title {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-direction: column;
+  font-size: 1.25rem;
+  margin-right: 1rem;
+}
+
+.ap-lastseen {
+  font-size: 1rem;
+  color: #888;
+}
+
+.ap-details {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  font-size: 1rem;
+}
+
+.ap-details span {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 0 0.5rem;
+}
+
+.ap-details span svg {
+  margin-right: 0.5rem;
+}
+
+.explanation {
+  width: 40%;
+  padding: 3rem;
+  box-sizing: border-box;
+  font-size: 1rem;
+}
+
+.logo {
+  width: 50%;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.fineprint {
+  font-size: 0.75rem;
+  color: #555;
+  text-align: center;
+}
+
+h1 {
+  text-align: center;
+}
+
+h3 {
+  color: #fff97e;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
