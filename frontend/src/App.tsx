@@ -46,12 +46,12 @@ enum ReconAPEncryptionType {
   WPA3_SAE = 2199027450128, // WPA3 (SAE)
 }
 
-const MAX_APS = 15;
+const MAX_APS = 14;
 
 const prependNewAP = (newAp: ReconAP): ((prevValue: ReconAP[]) => ReconAP[]) => {
   return (prevValue: ReconAP[]): ReconAP[] => {
     if (prevValue.length >= MAX_APS) {
-      return [newAp, ...prevValue.slice(0, MAX_APS - 2)];
+      return [newAp, ...prevValue.slice(0, MAX_APS - 1)];
     }
     return [newAp, ...prevValue];
   };
