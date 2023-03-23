@@ -1,0 +1,34 @@
+version: "3.4"
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: ./Dockerfile
+      args:
+        - REACT_APP_API_URL=http://localhost
+        - REACT_APP_WS_URL=ws://localhost
+    ports:
+      - 80:80
+      - 443:443
+    restart: unless-stopped
+    networks:
+      - ssid-jungle
+    depends_on:
+      - backend
+    volumes:
+      - /app/node_modules/
+      - /app/.env
+  backend:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    restart: unless-stopped
+    networks:
+      - ssid-jungle
+    environment:
+      - GIN_MODE=release
+
+networks:
+  ssid-jungle:
+    driver: bridge
