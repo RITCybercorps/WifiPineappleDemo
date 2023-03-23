@@ -11,6 +11,12 @@ import (
 	"gitlab.ritsec.cloud/BradHacker/ssid-jungle/backend/pineapple/recon"
 )
 
+var SSID_FILTER = map[string]bool{
+	"RIT-WiFi":  true,
+	"RIT-Guest": true,
+	"eduroam":   true,
+}
+
 func ClearScans(token string) {
 	// Clear previous scan data
 	for {
@@ -109,6 +115,10 @@ func EmitAPs(token string, apCache map[string]recon.ReconAP, apEmit chan recon.R
 		return
 	}
 	for _, ap := range apRes.Aps {
+		_, isFiltered := SSID_FILTER[ap.Ssid]
+		if isFiltered {
+			continue
+		}
 		cachedAp, exists := apCache[ap.Bssid]
 		if !exists {
 			// AP hasn't been seen before
