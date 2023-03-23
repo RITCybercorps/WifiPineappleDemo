@@ -40,6 +40,8 @@ docker compose up
 docker compose up -d
 ```
 
+You can then access the webpage at [http://localhost](http:/localhost)
+
 ## Configuration
 
 ### SSID Filtering
