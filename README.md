@@ -1,4 +1,4 @@
-# ssid-jungle
+# WiFi Pineapple Demo (aka. ssid-jungle)
 
 This project is a demonstration using the [Wifi Pineapple Mk7](https://shop.hak5.org/products/wifi-pineapple) to show just how much data exists floating around us.
 
