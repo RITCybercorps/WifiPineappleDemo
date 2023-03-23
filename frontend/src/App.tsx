@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import { useWebSocket } from "react-use-websocket/dist/lib/use-websocket";
-import { FactoryTwoTone, SignalWifi2BarTwoTone, WifiChannelTwoTone } from "@mui/icons-material";
+import { FactoryTwoTone, LockTwoTone, SignalWifi2BarTwoTone, WifiChannelTwoTone } from "@mui/icons-material";
 import GCILogo from "./assets/gci_logo.png";
 import SFSLogo from "./assets/sfs_logo.png";
 import SFSNationalLogo from "./assets/sfs_national.png";
@@ -57,6 +57,23 @@ const prependNewAP = (newAp: ReconAP): ((prevValue: ReconAP[]) => ReconAP[]) => 
   };
 };
 
+const getEncryptionName = (encryption: number): string => {
+  switch (encryption) {
+    case ReconAPEncryptionType.OPEN:
+      return "Open";
+    case ReconAPEncryptionType.WEP:
+      return "WEP";
+    case ReconAPEncryptionType.WPA2_PSK:
+      return "WPA2 (PSK)";
+    case ReconAPEncryptionType.WPA2_MIXED_PSK:
+      return "WPA2 Mixed (PSK)";
+    case ReconAPEncryptionType.WPA3_SAE:
+      return "WPA3 (SAE)";
+    default:
+      return "Unknown";
+  }
+};
+
 const App: React.FC = (): React.ReactElement => {
   const [apList, setApList] = useState<ReconAP[]>([]);
   useWebSocket(`${process.env.REACT_APP_WS_URL}/api/subscribe`, {
@@ -76,6 +93,10 @@ const App: React.FC = (): React.ReactElement => {
               <span className="ap-lastseen">{new Date(ap.last_seen * 1000).toLocaleTimeString()}</span>
             </div>
             <div className="ap-details">
+              <span>
+                <LockTwoTone />
+                {getEncryptionName(ap.encryption)}
+              </span>
               <span>
                 <FactoryTwoTone />
                 {ap.vendor}
@@ -117,7 +138,6 @@ const App: React.FC = (): React.ReactElement => {
           only by Bradley Harker. This is a demonstration, no data collected relating to wireless access points will be used with malicious
           intent.
         </p>
-
         <img className="logo sfs" src={SFSLogo} />
         <img className="logo gci" src={GCILogo} />
       </div>
