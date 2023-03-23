@@ -207,9 +207,9 @@ func ListScanAps(token string, scanId int) (*ReconScanApResponse, error) {
 	payload, err := json.Marshal(ReconScanApBody{
 		Search:   "",
 		Page:     0,
-		PageSize: 14,
+		PageSize: 99999999,
 		SortCol:  "last_seen",
-		SortDir:  "desc",
+		SortDir:  "asc",
 	})
 	if err != nil {
 		return nil, fmt.Errorf("failed to marshal scan ap body: %v", err)

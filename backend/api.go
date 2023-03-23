@@ -30,7 +30,7 @@ func StartAPI(ctx context.Context, wg *sync.WaitGroup, apEmit chan recon.ReconAP
 	r := gin.Default()
 
 	r.Use(cors.New(cors.Config{
-		AllowOrigins: []string{"http://localhost:3000"},
+		AllowOrigins: []string{"http://localhost:3000", "http://localhost"},
 		AllowMethods: []string{"GET"},
 	}))
 

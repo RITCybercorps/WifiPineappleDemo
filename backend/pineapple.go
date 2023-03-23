@@ -128,7 +128,6 @@ func EmitAPs(token string, apCache map[string]recon.ReconAP, apEmit chan recon.R
 		}
 		// Wait so animation can play on frontend
 		time.Sleep(500 * time.Millisecond)
-		logrus.Infof("emitted ap %s", ap.Ssid)
 	}
 }
 
@@ -143,7 +142,7 @@ func PollSSIDs(ctx context.Context, wg *sync.WaitGroup, token string, apCache ma
 		case <-ticker.C:
 			// PrintSSIDs(token, apCache)
 			EmitAPs(token, apCache, apEmit)
-			logrus.Info("waiting 10 secs...")
+			// logrus.Info("waiting 10 secs...")
 		case <-ctx.Done():
 			ticker.Stop()
 			logrus.Warn("stopping pineapple polling...")
